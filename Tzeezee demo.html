@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tzeezee Creativity</title>
+  <style>
+    body {margin:0;font-family:Arial, sans-serif;background:linear-gradient(135deg,#ff00cc,#3333ff);color:white;}
+    header {text-align:center;padding:30px;background:rgba(0,0,0,0.6);font-size:32px;font-weight:bold;}
+    nav {display:flex;justify-content:center;flex-wrap:wrap;gap:12px;background:rgba(0,0,0,0.85);padding:12px;position:sticky;top:0;z-index:10;}
+    nav a {color:white;text-decoration:none;font-weight:bold;padding:8px 12px;border-radius:8px;}
+    nav a:hover {background:yellow;color:black;}
+    .section {padding:30px 15px;text-align:center;}
+    .products {display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;}
+    .card {background:rgba(0,0,0,0.6);padding:12px;border-radius:15px;transition:0.3s;}
+    .card img {width:100%;border-radius:10px;height:180px;object-fit:cover;}
+    .card:hover {transform:scale(1.06);background:rgba(255,255,255,0.2);}    
+    button {margin-top:8px;padding:8px 15px;border:none;background:yellow;color:black;font-weight:bold;border-radius:10px;cursor:pointer;}
+    input {padding:10px;width:80%;max-width:300px;border-radius:10px;border:none;margin-bottom:20px;}
+    footer {text-align:center;padding:15px;background:rgba(0,0,0,0.8);font-size:14px;}
+    .whatsapp {position:fixed;bottom:20px;right:20px;background:#25D366;color:white;padding:12px 18px;border-radius:50px;text-decoration:none;}
+    .instagram {position:fixed;bottom:70px;right:20px;background:#E1306C;color:white;padding:12px 18px;border-radius:50px;text-decoration:none;}
+  </style>
+</head>
+<body>
+
+<header>
+  Tzeezee Creativity ✨
+</header>
+
+<nav>
+  <a href="#beads">Beads</a>
+  <a href="#perfume">Perfume</a>
+  <a href="#shoes">Shoes</a>
+  <a href="#bags">Bags</a>
+  <a href="#wire">Wire Works</a>
+  <a href="#accessories">Accessories</a>
+</nav>
+
+<div class="section">
+  <input type="text" id="search" placeholder="Search product..." onkeyup="searchProducts()">
+</div>
+
+<div class="section" id="beads"><h2>Beads</h2><div class="products" id="beads-list"></div></div>
+<div class="section" id="perfume"><h2>Perfume</h2><div class="products" id="perfume-list"></div></div>
+<div class="section" id="shoes"><h2>Shoes</h2><div class="products" id="shoes-list"></div></div>
+<div class="section" id="bags"><h2>Bags</h2><div class="products" id="bags-list"></div></div>
+<div class="section" id="wire"><h2>Wire Works</h2><div class="products" id="wire-list"></div></div>
+<div class="section" id="accessories"><h2>Accessories</h2><div class="products" id="accessories-list"></div></div>
+
+<footer>
+  📱 Order via WhatsApp | Follow us on Instagram
+</footer>
+
+<a class="whatsapp" href="#" onclick="buy('Hello, I want to order')">WhatsApp</a>
+<a class="instagram" href="https://instagram.com/tzzzecreativity" target="_blank">Instagram</a>
+
+<script>
+const phone = "2348038757366";
+
+const products = {
+  beads:[
+    {name:"Handmade Beaded Necklace",img:"https://images.unsplash.com/photo-1606760227091-3dd870d97f1d"},
+    {name:"Colorful Waist Beads",img:"https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f"},
+    {name:"Beaded Bracelet Set",img:"https://images.unsplash.com/photo-1588444650733-dc3c2a3d2f66"}
+  ],
+  perfume:[
+    {name:"Luxury Oil Perfume",img:"https://images.unsplash.com/photo-1587019158091-1a103c5dd17f"},
+    {name:"Classic Fragrance",img:"https://images.unsplash.com/photo-1523293182086-7651a899d37f"}
+  ],
+  shoes:[
+    {name:"Casual Sneakers",img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff"},
+    {name:"Ladies Fashion Heels",img:"https://images.unsplash.com/photo-1543163521-1bf539c55dd2"}
+  ],
+  bags:[
+    {name:"Leather Handbag",img:"https://images.unsplash.com/photo-1584917865442-de89df76afd3"},
+    {name:"Mini Fashion Bag",img:"https://images.unsplash.com/photo-1591561954557-26941169b49e"}
+  ],
+  wire:[
+    {name:"Wire Work Basket",img:"https://images.unsplash.com/photo-1519710164239-da123dc03ef4"},
+    {name:"Decorative Wire Design",img:"https://images.unsplash.com/photo-1600585154340-be6161a56a0c"}
+  ],
+  accessories:[
+    {name:"Gold Earrings",img:"https://images.unsplash.com/photo-1515562141207-7a88fb7ce338"},
+    {name:"Fashion Sunglasses",img:"https://images.unsplash.com/photo-1511499767150-a48a237f0083"},
+    {name:"Wrist Watch",img:"https://images.unsplash.com/photo-1511707171634-5f897ff02aa9"}
+  ]
+};
+
+function displayProducts(category,id){
+  const container=document.getElementById(id);
+  container.innerHTML="";
+  products[category].forEach(p=>{
+    container.innerHTML+=`
+    <div class="card">
+      <img src="${p.img}">
+      ${p.name}<br>
+      <button onclick="buy('${p.name}')">Order</button>
+    </div>`;
+  });
+}
+
+function buy(product){
+  let url="https://wa.me/"+phone+"?text="+encodeURIComponent("Hello, I want to order "+product);
+  window.open(url,'_blank');
+}
+
+function searchProducts(){
+  let input=document.getElementById("search").value.toLowerCase();
+  document.querySelectorAll(".card").forEach(card=>{
+    card.style.display = card.innerText.toLowerCase().includes(input) ? "block" : "none";
+  });
+}
+
+// Load all
+displayProducts('beads','beads-list');
+displayProducts('perfume','perfume-list');
+displayProducts('shoes','shoes-list');
+displayProducts('bags','bags-list');
+displayProducts('wire','wire-list');
+displayProducts('accessories','accessories-list');
+</script>
+
+</body>
+</html>
